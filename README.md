@@ -1,5 +1,7 @@
 # Sello
 
+**Live demo:** https://dhunidesigns.github.io/sello/
+
 An AI sales assistant for Instagram sellers. Sello answers routine DMs from the seller's real prices and stock, and hands over to the seller for payments, discounts, complaints and anything it isn't sure about.
 
 Built with Next.js (App Router) and TypeScript. Mobile-first.

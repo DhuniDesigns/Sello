@@ -22,7 +22,10 @@ const sans = localFont({
 export const metadata: Metadata = {
   title: "Sello",
   description: "Sello replies to your DMs with your real prices and stock, and brings you in when a buyer is ready to pay.",
-  icons: { icon: "/brand/sello-app-icon.svg", apple: "/brand/sello-app-icon.svg" },
+  icons: {
+    icon: `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/brand/sello-app-icon.svg`,
+    apple: `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/brand/sello-app-icon.svg`,
+  },
 };
 
 export const viewport: Viewport = {
