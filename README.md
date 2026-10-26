@@ -18,3 +18,5 @@ Then open http://localhost:3000.
 ## Screens built
 
 - `/` — 01 Onboarding / Welcome: the orange rises from the bottom and settles into the top glow, the content pops in, and the Get started button finishes with a shine. Double-tap the app icon to replay.
+- `/create-account` — 02 Onboarding / Enter your email: Verify turns on once the email is valid; Continue with Google skips ahead (no backend yet).
+- `/verify` — 02 Onboarding / Verify your email: six-digit code shown as `567 758`; any six digits pass for now, then the "You're in!" sheet slides up and the icon bounces.

@@ -27,7 +27,7 @@ export function Welcome() {
   }, []);
 
   return (
-    <main className={styles.screen} key={run}>
+    <main className={styles.screen} key={run} data-status="light" data-replay>
       <div className={styles.glow} aria-hidden="true" />
       <div className={styles.flood} aria-hidden="true" />
 

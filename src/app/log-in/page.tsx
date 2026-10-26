@@ -1,3 +1,5 @@
+export const viewport = { themeColor: "#F8F8F8" };
+
 import Link from "next/link";
 
 // Placeholder until this screen is built.
