@@ -1,15 +1,2 @@
-"use client";
-
+/** Fired by the desktop control pill; screens with an intro animation listen for it and replay. */
 export const REPLAY_EVENT = "sello:replay";
-
-export function ReplayButton() {
-  return (
-    <button type="button" onClick={() => window.dispatchEvent(new Event(REPLAY_EVENT))}>
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <path d="M3 12a9 9 0 1 0 3-6.7" />
-        <path d="M3 4v5h5" />
-      </svg>
-      Replay animation
-    </button>
-  );
-}
