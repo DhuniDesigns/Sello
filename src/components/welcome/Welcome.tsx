@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { REPLAY_EVENT } from "@/components/shell/ReplayButton";
 import { SelloIcon } from "@/components/brand/SelloIcon";
 import styles from "./Welcome.module.css";
 
@@ -11,13 +12,19 @@ import styles from "./Welcome.module.css";
  * Sequence (about 3 seconds):
  * 1. Orange rises from the bottom of the screen and flows up past the top.
  * 2. As it leaves, it settles into the soft orange glow at the top.
- * 3. The app icon pops in, then the headline, subtext, button and log-in link rise in.
+ * 3. The app icon drops in with a little bounce, then the headline, subtext, button and log-in link rise in.
  * 4. The button finishes with a light sweep and a warm glow, and the sweep repeats every few seconds.
  *
  * Double-tap the icon to replay the sequence (handy for screen recordings).
  */
 export function Welcome() {
   const [run, setRun] = useState(0);
+
+  useEffect(() => {
+    const replay = () => setRun((n) => n + 1);
+    window.addEventListener(REPLAY_EVENT, replay);
+    return () => window.removeEventListener(REPLAY_EVENT, replay);
+  }, []);
 
   return (
     <main className={styles.screen} key={run}>
@@ -32,7 +39,7 @@ export function Welcome() {
           aria-label="Sello"
           tabIndex={-1}
         >
-          <SelloIcon size={56} />
+          <SelloIcon size={60} />
         </button>
 
         <h1 id="welcome-title" className={styles.title}>
