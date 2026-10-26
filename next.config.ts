@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
-// On GitHub Pages the site lives at /sello, so every path needs that prefix.
-const basePath = process.env.GITHUB_PAGES === "true" ? "/sello" : "";
+// On GitHub Pages the site lives at /Sello, so every path needs that prefix.
+const basePath = process.env.GITHUB_PAGES === "true" ? "/Sello" : "";
 
 const nextConfig: NextConfig = {
   output: "export",
