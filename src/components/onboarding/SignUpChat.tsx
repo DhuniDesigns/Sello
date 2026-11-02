@@ -13,7 +13,7 @@ import styles from "./SignUpChat.module.css";
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const DEMO_CODE = "567758";
-const PILL = 27;
+const PILL = 25;
 const MORPH_EASE = "cubic-bezier(0.32, 0.72, 0, 1)";
 
 type Step = "email" | "sending" | "code" | "checking" | "done";
@@ -29,7 +29,13 @@ const reduced = () => typeof window !== "undefined" && matchMedia("(prefers-redu
 /* Sign-up as a conversation with Sello                                */
 /* ------------------------------------------------------------------ */
 
-export function SignUpChat() {
+type Props = {
+  /** Shown as a layer over the welcome screen: no page-enter slide, Sello waits for the layer to land. */
+  embedded?: boolean;
+  onBack?: () => void;
+};
+
+export function SignUpChat({ embedded = false, onBack }: Props = {}) {
   const [step, setStep] = useState<Step>("sending");
   const [msgs, setMsgs] = useState<Msg[]>([]);
   const [typing, setTyping] = useState(false);
@@ -67,7 +73,7 @@ export function SignUpChat() {
   useEffect(() => {
     let live = true;
     (async () => {
-      await wait(450);
+      await wait(embedded ? 700 : 450);
       if (!live) return;
       await selloSays("Hi! I'm Sello. What's your email? I'll send you a code to make sure it's you.");
       setStep("email");
@@ -75,7 +81,7 @@ export function SignUpChat() {
     return () => {
       live = false;
     };
-  }, [selloSays]);
+  }, [selloSays, embedded]);
 
   // Focus the field whenever it's the user's turn
   useEffect(() => {
@@ -164,8 +170,8 @@ export function SignUpChat() {
   const lastId = msgs[msgs.length - 1]?.id;
 
   return (
-    <form className={base.screen} onSubmit={onSubmit} noValidate>
-      <TopBar progress={step === "email" || msgs.length < 2 ? 0.5 : 1} from={0} backHref="/" />
+    <form className={`${base.screen} ${embedded ? styles.embedded : ""}`} onSubmit={onSubmit} noValidate>
+      <TopBar progress={step === "email" || msgs.length < 2 ? 0.5 : 1} from={0} backHref="/" onBack={onBack} />
       <span className={base.chip}>Create Account</span>
 
       <div className={styles.thread} ref={threadRef} aria-live="polite">

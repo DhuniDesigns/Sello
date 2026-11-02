@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { REPLAY_EVENT } from "@/components/shell/ReplayButton";
 import { SelloIcon } from "@/components/brand/SelloIcon";
+import { SignUpChat } from "@/components/onboarding/SignUpChat";
 import styles from "./Welcome.module.css";
 
 /**
@@ -16,22 +17,66 @@ import styles from "./Welcome.module.css";
  * 4. The button finishes with a light sweep and a warm glow, and the sweep repeats every few seconds.
  *
  * Double-tap the icon to replay the sequence (handy for screen recordings).
+ *
+ * "Get started" doesn't navigate away: Create account slides up as a layer over this screen
+ * while the orange fades out underneath, like a sheet stacking on iOS. The URL still changes,
+ * so refresh and the browser back button behave.
  */
+const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+const LAYER_MS = 560;
+
+type Layer = "closed" | "open" | "closing";
+
 export function Welcome() {
   const [run, setRun] = useState(0);
+  const [layer, setLayer] = useState<Layer>("closed");
 
-  useEffect(() => {
-    const replay = () => setRun((n) => n + 1);
-    window.addEventListener(REPLAY_EVENT, replay);
-    return () => window.removeEventListener(REPLAY_EVENT, replay);
+  const close = useCallback(() => {
+    setLayer((l) => (l === "open" ? "closing" : l));
+    setTimeout(() => setLayer("closed"), LAYER_MS);
   }, []);
 
+  useEffect(() => {
+    const replay = () => {
+      setLayer("closed");
+      setRun((n) => n + 1);
+    };
+    const onPop = () => close();
+    window.addEventListener(REPLAY_EVENT, replay);
+    window.addEventListener("popstate", onPop);
+    return () => {
+      window.removeEventListener(REPLAY_EVENT, replay);
+      window.removeEventListener("popstate", onPop);
+    };
+  }, [close]);
+
+  const open = (e: React.MouseEvent) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey) return; // let new-tab clicks through
+    e.preventDefault();
+    window.history.pushState({ sello: "create-account" }, "", `${BASE}/create-account/`);
+    setLayer("open");
+  };
+
+  const back = () => {
+    if (window.history.state?.sello === "create-account") window.history.back();
+    else close();
+  };
+
+  const covered = layer !== "closed";
+
   return (
-    <main className={styles.screen} key={run} data-status="light" data-replay>
-      <div className={styles.glow} aria-hidden="true" />
+    <main
+      className={`${styles.screen} ${layer === "open" ? styles.covered : ""}`}
+      key={run}
+      data-status={layer === "open" ? "dark" : "light"}
+      data-replay={layer === "closed" ? "" : undefined}
+    >
+      <div className={styles.glowWrap} aria-hidden="true">
+        <div className={styles.glow} />
+      </div>
       <div className={styles.flood} aria-hidden="true" />
 
-      <section className={styles.content} aria-labelledby="welcome-title">
+      <section className={styles.content} aria-labelledby="welcome-title" aria-hidden={covered || undefined}>
         <button
           type="button"
           className={styles.icon}
@@ -53,7 +98,7 @@ export function Welcome() {
           <b>Sello</b> replies to your DMs with your real prices and stock, and brings you in when a buyer is ready to pay.
         </p>
 
-        <Link href="/create-account" className={styles.cta}>
+        <Link href="/create-account" className={styles.cta} onClick={open}>
           <span className={styles.ctaLabel}>Get started</span>
           <span className={styles.shine} aria-hidden="true" />
         </Link>
@@ -62,6 +107,12 @@ export function Welcome() {
           Already have an account? <Link href="/log-in">Log in</Link>
         </p>
       </section>
+
+      {covered && (
+        <div className={`${styles.layer} ${layer === "closing" ? styles.layerOut : ""}`}>
+          <SignUpChat embedded onBack={back} />
+        </div>
+      )}
     </main>
   );
 }

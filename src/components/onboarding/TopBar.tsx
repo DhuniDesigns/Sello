@@ -5,7 +5,17 @@ import { useEffect, useState } from "react";
 import styles from "./Onboarding.module.css";
 
 /** Back button on the left, step progress on the right. `from` lets the bar animate from the previous step's value. */
-export function TopBar({ progress, from = progress, backHref }: { progress: number; from?: number; backHref?: string }) {
+export function TopBar({
+  progress,
+  from = progress,
+  backHref,
+  onBack,
+}: {
+  progress: number;
+  from?: number;
+  backHref?: string;
+  onBack?: () => void;
+}) {
   const router = useRouter();
   const [width, setWidth] = useState(from);
 
@@ -20,7 +30,7 @@ export function TopBar({ progress, from = progress, backHref }: { progress: numb
         type="button"
         className={styles.back}
         aria-label="Back"
-        onClick={() => (backHref ? router.push(backHref) : router.back())}
+        onClick={() => (onBack ? onBack() : backHref ? router.push(backHref) : router.back())}
       >
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
           <path d="M19 12H5" />

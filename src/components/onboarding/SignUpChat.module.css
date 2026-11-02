@@ -3,8 +3,8 @@
 .thread {
   flex: 1;
   min-height: 0;
-  margin: 18px -24px 12px;
-  padding: 4px 24px 12px;
+  margin: 18px -20px 12px;
+  padding: 4px 20px 12px;
   overflow-y: auto;
   overscroll-behavior: contain;
   scrollbar-width: none;
@@ -16,6 +16,10 @@
 
 .thread::-webkit-scrollbar {
   display: none;
+}
+
+form.embedded {
+  animation: none;
 }
 
 /* ---------- Bubbles ---------- */
@@ -213,9 +217,12 @@
 
 /* ---------- Buttons ---------- */
 .google:disabled {
-  opacity: 0.4;
-  background: linear-gradient(180deg, #2a2826 0%, #141312 46%, #0b0b0a 100%);
-  color: #fff;
+  opacity: 0.45;
+  background:
+    linear-gradient(#111, #111) padding-box,
+    linear-gradient(180deg, #4c4c4c, #212121) border-box;
+  color: #fcfcfc;
+  box-shadow: 0 0 0 2px #d6d5d5;
 }
 
 .shake {
@@ -272,10 +279,10 @@
 
 @keyframes unshrink {
   from {
-    clip-path: inset(0 calc(50% - 27px) 0 calc(50% - 27px) round 27px);
+    clip-path: inset(0 calc(50% - 25px) 0 calc(50% - 25px) round 25px);
   }
   to {
-    clip-path: inset(0 0 0 0 round 27px);
+    clip-path: inset(0 0 0 0 round 25px);
   }
 }
 
