@@ -1,7 +1,7 @@
 export const viewport = { themeColor: "#F8F8F8" };
 
-import { VerifyStep } from "@/components/onboarding/VerifyStep";
+import { SignUpChat } from "@/components/onboarding/SignUpChat";
 
 export default function Page() {
-  return <VerifyStep />;
+  return <SignUpChat />;
 }

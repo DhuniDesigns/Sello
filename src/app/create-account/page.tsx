@@ -1,7 +1,7 @@
 export const viewport = { themeColor: "#F8F8F8" };
 
-import { EmailStep } from "@/components/onboarding/EmailStep";
+import { SignUpChat } from "@/components/onboarding/SignUpChat";
 
 export default function Page() {
-  return <EmailStep />;
+  return <SignUpChat />;
 }
