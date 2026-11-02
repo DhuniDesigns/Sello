@@ -60,10 +60,10 @@ export function SignUpChat({ embedded = false, onBack }: Props = {}) {
     async (...lines: string[]) => {
       for (const text of lines) {
         setTyping(true);
-        await wait(Math.min(1200, 520 + text.length * 9));
+        await wait(Math.min(1800, 900 + text.length * 12));
         setTyping(false);
         push({ from: "sello", text });
-        await wait(260);
+        await wait(text.split(" ").length * 70 + 700); // let the words finish landing
       }
     },
     [push]
@@ -73,7 +73,7 @@ export function SignUpChat({ embedded = false, onBack }: Props = {}) {
   useEffect(() => {
     let live = true;
     (async () => {
-      await wait(embedded ? 700 : 450);
+      await wait(embedded ? 1000 : 600);
       if (!live) return;
       await selloSays("Hi! I'm Sello. What's your email? I'll send you a code to make sure it's you.");
       setStep("email");
@@ -106,7 +106,7 @@ export function SignUpChat({ embedded = false, onBack }: Props = {}) {
     try {
       sessionStorage.setItem("sello:email", address);
     } catch {}
-    await wait(380);
+    await wait(700);
     await selloSays(`Sent! Check ${address} for a 6-digit code and pop it in here.`, "Psst, this is a demo. The code is 567 758.");
     setStep("code");
   };
@@ -116,7 +116,7 @@ export function SignUpChat({ embedded = false, onBack }: Props = {}) {
     const entered = code;
     setCode("");
     setStep("checking");
-    await wait(950);
+    await wait(1300);
     if (entered === DEMO_CODE) {
       setStep("done");
       return;
@@ -263,7 +263,7 @@ function Bubble({ msg, dim, grouped }: { msg: Msg; dim?: "past" | "soft"; groupe
     const dx = (msg.flip.left - to.left) / k;
     const dy = (msg.flip.top - to.top) / k;
     el.animate([{ transform: `translate(${dx}px, ${dy}px) scale(${scale})` }, { transform: "none" }], {
-      duration: 560,
+      duration: 850,
       easing: MORPH_EASE,
     });
     bgRef.current?.animate(
@@ -272,7 +272,7 @@ function Bubble({ msg, dim, grouped }: { msg: Msg; dim?: "past" | "soft"; groupe
         { opacity: 0, transform: "scale(0.86)", offset: 0.25 },
         { opacity: 1, transform: "none" },
       ],
-      { duration: 560, easing: "cubic-bezier(0.23, 1, 0.32, 1)" }
+      { duration: 850, easing: "cubic-bezier(0.23, 1, 0.32, 1)" }
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -294,7 +294,7 @@ function Bubble({ msg, dim, grouped }: { msg: Msg; dim?: "past" | "soft"; groupe
           {mine
             ? msg.text
             : msg.text.split(" ").map((w, i) => (
-                <span key={i} className={styles.word} style={{ animationDelay: `${i * 32}ms` }}>
+                <span key={i} className={styles.word} style={{ animationDelay: `${i * 70}ms` }}>
                   {w}{" "}
                 </span>
               ))}

@@ -28,8 +28,8 @@ form.embedded {
   flex-direction: column;
   max-width: 84%;
   transition:
-    opacity 0.6s ease,
-    filter 0.6s ease;
+    opacity 0.9s ease,
+    filter 0.9s ease;
 }
 
 .sello {
@@ -63,7 +63,7 @@ form.embedded {
   font-size: 12px;
   font-weight: 500;
   color: #2b2826;
-  animation: rise 0.4s cubic-bezier(0.23, 1, 0.32, 1) both;
+  animation: rise 0.6s cubic-bezier(0.23, 1, 0.32, 1) both;
 }
 
 .meta time {
@@ -101,7 +101,7 @@ form.embedded {
 }
 
 .sello .bubble {
-  animation: pop 0.42s cubic-bezier(0.23, 1, 0.32, 1) both;
+  animation: pop 0.6s cubic-bezier(0.23, 1, 0.32, 1) both;
   transform-origin: 0 100%;
 }
 
@@ -127,21 +127,21 @@ form.embedded {
 
 .mine .bg {
   background: #fff;
-  border-bottom-right-radius: 6px;
+  border-radius: 22px;
   box-shadow:
     0 0 0 1px rgba(17, 17, 17, 0.05),
     0 2px 6px -2px rgba(17, 17, 17, 0.1);
 }
 
 .mine:not(.flipped) .bubble {
-  animation: pop 0.42s cubic-bezier(0.23, 1, 0.32, 1) both;
+  animation: pop 0.6s cubic-bezier(0.23, 1, 0.32, 1) both;
   transform-origin: 100% 100%;
 }
 
 .word {
   display: inline-block;
   white-space: pre;
-  animation: lyric 0.5s cubic-bezier(0.23, 1, 0.32, 1) both;
+  animation: lyric 0.8s cubic-bezier(0.23, 1, 0.32, 1) both;
 }
 
 /* Typing dots */
@@ -149,7 +149,7 @@ form.embedded {
   display: flex;
   gap: 4px;
   padding: 15px 16px;
-  animation: pop 0.35s cubic-bezier(0.23, 1, 0.32, 1) both;
+  animation: pop 0.5s cubic-bezier(0.23, 1, 0.32, 1) both;
   transform-origin: 0 100%;
 }
 
@@ -175,7 +175,7 @@ form.embedded {
 .lyric {
   position: relative;
   margin-top: 6px;
-  animation: rise 0.45s cubic-bezier(0.23, 1, 0.32, 1) both;
+  animation: rise 0.7s cubic-bezier(0.23, 1, 0.32, 1) both;
 }
 
 .lyric .lyricInput,
@@ -212,7 +212,7 @@ form.embedded {
 .ch {
   display: inline-block;
   white-space: pre;
-  animation: lyric 0.55s cubic-bezier(0.23, 1, 0.32, 1) both;
+  animation: lyric 0.9s cubic-bezier(0.23, 1, 0.32, 1) both;
 }
 
 /* ---------- Buttons ---------- */
@@ -227,8 +227,8 @@ form.embedded {
 
 .shake {
   animation:
-    unshrink 0.34s cubic-bezier(0.23, 1, 0.32, 1) both,
-    shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) 0.12s both;
+    unshrink 0.45s cubic-bezier(0.23, 1, 0.32, 1) both,
+    shake 0.7s cubic-bezier(0.36, 0.07, 0.19, 0.97) 0.2s both;
 }
 
 /* ---------- Keyframes ---------- */

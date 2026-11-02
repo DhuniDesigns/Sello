@@ -23,7 +23,7 @@ import styles from "./Welcome.module.css";
  * so refresh and the browser back button behave.
  */
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
-const LAYER_MS = 560;
+const LAYER_MS = 560; // closing
 
 type Layer = "closed" | "open" | "closing";
 
