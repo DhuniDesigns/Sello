@@ -188,6 +188,78 @@
   animation: spin 0.7s linear infinite;
 }
 
+/* ---------- Code field: real input underneath, animated digits on top ---------- */
+.codeWrap {
+  position: relative;
+  margin-top: 26px;
+}
+
+.codeWrap .field {
+  margin-top: 0;
+}
+
+.codeInput {
+  position: absolute;
+  inset: 0;
+  color: transparent;
+  caret-color: transparent;
+  z-index: 1;
+}
+
+.codeInput::selection {
+  background: transparent;
+}
+
+.codeView {
+  display: flex;
+  align-items: center;
+  min-height: 1.3em;
+  pointer-events: none;
+  white-space: pre;
+}
+
+.digit {
+  display: inline-block;
+  animation: digitIn 0.32s cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+
+.gap {
+  margin-left: 0.5em;
+}
+
+.placeholder {
+  color: #b5b0ab;
+}
+
+.caret {
+  width: 2px;
+  height: 1.1em;
+  margin-left: 1px;
+  border-radius: 2px;
+  background: var(--orange);
+  animation: blink 1s steps(1) infinite;
+}
+
+.caret + .placeholder {
+  margin-left: -3px;
+}
+
+/* ---------- Verify button: shrinks into a loader, then becomes the sheet ---------- */
+.label {
+  display: inline-block;
+}
+
+.shrink {
+  animation: shrink 0.42s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+  pointer-events: none;
+}
+
+.shrink .busy {
+  animation:
+    spin 0.7s linear infinite,
+    fade 0.2s ease 0.18s backwards;
+}
+
 /* ---------- "You're in" sheet ---------- */
 .overlay {
   position: absolute;
@@ -196,13 +268,19 @@
   display: flex;
   align-items: flex-end;
   padding: 12px max(12px, env(safe-area-inset-left)) calc(12px + env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-right));
+}
+
+.scrim {
+  position: absolute;
+  inset: 0;
   background: rgba(240, 240, 240, 0.35);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  animation: fade 0.4s ease both;
+  animation: fade 0.45s ease both;
 }
 
 .sheet {
+  position: relative;
   width: 100%;
   padding: 52px 20px 20px;
   border-radius: 36px;
@@ -211,24 +289,31 @@
   box-shadow:
     0 0 0 1px rgba(17, 17, 17, 0.04),
     0 -10px 40px -20px rgba(17, 17, 17, 0.25);
-  animation: sheetUp 0.65s cubic-bezier(0.32, 0.72, 0, 1) both;
+}
+
+/* The button's black, fading out as the sheet opens */
+.ink {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  background: linear-gradient(180deg, #2a2826 0%, #141312 46%, #0b0b0a 100%);
+  pointer-events: none;
 }
 
 .sheetIcon {
-  display: inline-block;
-  transform-origin: 50% 100%;
-  filter: drop-shadow(0 2px 3px rgba(150, 50, 12, 0.18)) drop-shadow(0 16px 26px rgba(228, 82, 28, 0.32));
-  animation: bounce 1s linear 0.35s both;
+  display: flex;
+  justify-content: center;
 }
 
 .sheetTitle {
-  margin-top: 26px;
+  margin-top: 30px;
   font-family: var(--display);
   font-weight: 600;
   font-size: 30px;
   letter-spacing: -0.02em;
   color: var(--ink);
-  animation: rise 0.6s var(--ease-out) 0.55s both;
+  animation: rise 0.6s var(--ease-out) 0.5s both;
 }
 
 .sheetSub {
@@ -237,12 +322,12 @@
   font-size: 15px;
   line-height: 1.4;
   color: #6b6560;
-  animation: rise 0.6s var(--ease-out) 0.62s both;
+  animation: rise 0.6s var(--ease-out) 0.57s both;
 }
 
 .sheet .btn {
   margin-top: 30px;
-  animation: rise 0.6s var(--ease-out) 0.7s both;
+  animation: rise 0.6s var(--ease-out) 0.64s both;
 }
 
 @keyframes enter {
@@ -262,12 +347,6 @@
   }
 }
 
-@keyframes sheetUp {
-  from {
-    transform: translateY(105%);
-  }
-}
-
 @keyframes rise {
   from {
     opacity: 0;
@@ -281,32 +360,26 @@
   }
 }
 
-@keyframes bounce {
-  0% {
+@keyframes digitIn {
+  from {
     opacity: 0;
-    transform: translateY(-40px) scale(0.7);
-    animation-timing-function: cubic-bezier(0.5, 0, 0.9, 0.5);
+    transform: translateY(9px) scale(0.92);
+    filter: blur(4px);
   }
-  34% {
-    opacity: 1;
-    transform: translateY(0) scale(1.08, 0.9);
-    animation-timing-function: cubic-bezier(0.2, 0.6, 0.4, 1);
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
   }
-  52% {
-    transform: translateY(-12px) scale(0.97, 1.04);
-    animation-timing-function: cubic-bezier(0.6, 0, 0.9, 0.6);
+}
+
+@keyframes shrink {
+  from {
+    clip-path: inset(0 0 0 0 round 27px);
   }
-  68% {
-    transform: translateY(0) scale(1.03, 0.97);
-    animation-timing-function: cubic-bezier(0.2, 0.6, 0.4, 1);
-  }
-  80% {
-    transform: translateY(-3px);
-  }
-  90%,
-  100% {
-    opacity: 1;
-    transform: none;
+  to {
+    clip-path: inset(0 calc(50% - 27px) 0 calc(50% - 27px) round 27px);
   }
 }
 
@@ -314,7 +387,9 @@
   .screen,
   .overlay,
   .sheet,
-  .sheetIcon,
+  .scrim,
+  .digit,
+  .shrink,
   .sheetTitle,
   .sheetSub,
   .sheet .btn,
