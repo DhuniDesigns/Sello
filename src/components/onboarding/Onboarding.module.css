@@ -310,6 +310,7 @@
 }
 
 .sheetIcon {
+  --enter-delay: 1.12s;
   display: flex;
   justify-content: center;
 }
@@ -321,7 +322,7 @@
   font-size: 30px;
   letter-spacing: -0.02em;
   color: var(--ink);
-  animation: rise 0.6s var(--ease-out) 0.5s both;
+  animation: rise 0.6s var(--ease-out) 0.68s both;
 }
 
 .sheetSub {
@@ -330,12 +331,12 @@
   font-size: 15px;
   line-height: 1.4;
   color: #6b6560;
-  animation: rise 0.6s var(--ease-out) 0.57s both;
+  animation: rise 0.6s var(--ease-out) 0.76s both;
 }
 
 .sheet .btn {
   margin-top: 30px;
-  animation: rise 0.6s var(--ease-out) 0.64s both;
+  animation: rise 0.6s var(--ease-out) 0.84s both;
 }
 
 @keyframes enter {

@@ -5,7 +5,7 @@
   width: var(--size);
   height: var(--size);
   perspective: 560px;
-  animation: popIn 0.9s cubic-bezier(0.34, 1.45, 0.64, 1) 0.32s backwards;
+  animation: popIn 0.9s cubic-bezier(0.34, 1.45, 0.64, 1) var(--enter-delay, 0.32s) backwards;
 }
 
 /* Soft shadow on the "floor" that shrinks as the icon rises */
@@ -18,7 +18,9 @@
   border-radius: 50%;
   background: radial-gradient(closest-side, rgba(214, 78, 24, 0.42), rgba(214, 78, 24, 0));
   filter: blur(3px);
-  animation: groundPulse 6s ease-in-out infinite;
+  animation:
+    fadeIn 0.6s ease var(--enter-delay, 0.32s) backwards,
+    groundPulse 6s ease-in-out infinite;
 }
 
 .tilt {
@@ -27,7 +29,7 @@
   height: 100%;
   transform-style: preserve-3d;
   transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-  animation: spinIn 1.2s cubic-bezier(0.23, 1, 0.32, 1) 0.32s backwards;
+  animation: spinIn 1.2s cubic-bezier(0.23, 1, 0.32, 1) var(--enter-delay, 0.32s) backwards;
 }
 
 .float {

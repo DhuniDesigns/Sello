@@ -152,10 +152,10 @@ export function SignUpChat({ embedded = false, onBack }: Props = {}) {
       .map((v) => `${v.toFixed(1)}px`)
       .join(" ");
     sheet.animate([{ clipPath: `inset(${inset} round ${PILL}px)` }, { clipPath: "inset(0px 0px 0px 0px round 36px)" }], {
-      duration: 620,
+      duration: 900,
       easing: MORPH_EASE,
     });
-    inkRef.current?.animate([{ opacity: 1 }, { opacity: 1, offset: 0.25 }, { opacity: 0 }], {
+    inkRef.current?.animate([{ opacity: 1 }, { opacity: 1, offset: 0.12 }, { opacity: 0 }], {
       duration: 520,
       easing: "ease-out",
       fill: "forwards",
